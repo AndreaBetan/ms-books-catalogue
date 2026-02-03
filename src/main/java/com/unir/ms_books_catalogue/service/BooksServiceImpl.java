@@ -1,6 +1,7 @@
 package com.unir.ms_books_catalogue.service;
 
 import java.util.List;
+import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -146,4 +147,28 @@ public class BooksServiceImpl implements BooksService {
 
 		return books.stream().allMatch(Book::getVisible);
 	}
+
+	@Override
+	public List<Book> searchBooks (
+		String title,
+		String author,
+		LocalDate publication_date,
+		String category,
+		String isbn,
+		Integer rating,
+		Boolean visible
+	 ){
+		List<Book> books = repository.findAll();
+
+		return books.stream()
+		.filter(b -> title == null || b.getTitle().toLowerCase().contains(title.toLowerCase()))
+		.filter(b -> author == null || b.getAuthor().toLowerCase().contains(author.toLowerCase()))
+		.filter(b -> publication_date == null ||  b.getPublication_date().equals(publication_date))
+		.filter(b -> category == null ||  b.getCategory().toLowerCase().contains(category.toLowerCase()))
+		.filter(b -> isbn == null ||  b.getIsbn().contains(isbn))
+	 	.filter(b -> rating == null ||  b.getRating().equals(rating))
+	 	.filter(b -> visible == null ||   b.getVisible() == visible )
+		.toList();
+	 }
+
 }

@@ -21,3 +21,15 @@ public class CreateBookRequest {
 	private Integer rating;
 	private Boolean visible;
 }
+
+/** libro de ejemplo para el post
+	{
+		"title":"PruebaX",
+		"author":"Pako",
+		"publication_date":"2020-01-08",
+		"category":"Misterio",
+		"isbn":"123456789",
+		"rating":5,
+		"visible":true
+	}
+ */

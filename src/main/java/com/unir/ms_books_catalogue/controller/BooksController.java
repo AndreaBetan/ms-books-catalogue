@@ -2,6 +2,7 @@ package com.unir.ms_books_catalogue.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDate;
 
 import com.unir.ms_books_catalogue.controller.model.BookAvailabilityRequest;
 import com.unir.ms_books_catalogue.controller.model.CreateBookRequest;
@@ -158,4 +159,29 @@ public class BooksController {
 				: ResponseEntity.status(HttpStatus.CONFLICT).build();
 	}
 
+	/**
+	 * Recibe todos los parámetros que componen a un libro individualmente para revisar cada uno
+	 * Posibles respuestas:
+	 *  - 200 OK: todos los libros existen y están disponibles.
+	 *  - 409 Conflict: alguno de los libros no existe o no está disponible.
+	 * @return Devuelve la búsqueda de elementos 
+	 * http://localhost:8088/books/search?author=pako&visible=true
+	 */
+	@GetMapping("/books/search")
+	public ResponseEntity<List<Book>> searchBooks(
+		@RequestParam(required = false) String author,
+		@RequestParam(required = false) String title,
+		@RequestParam(required = false) String category,
+		@RequestParam(required = false) LocalDate publication_date,
+		@RequestParam(required = false) String isbn,
+		@RequestParam(required = false) Integer rating,
+		@RequestParam(required = false) Boolean visible
+	){
+
+		List<Book> books = service.searchBooks(title,author,publication_date,category,isbn,rating,visible);
+
+		return books != null
+			? ResponseEntity.ok(books)
+			: ResponseEntity.notFound().build();
+	}
 }
