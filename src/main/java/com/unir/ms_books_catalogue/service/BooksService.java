@@ -1,5 +1,6 @@
 package com.unir.ms_books_catalogue.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.unir.ms_books_catalogue.data.model.Book;
@@ -20,4 +21,14 @@ public interface BooksService {
 	Book createBook(CreateBookRequest request);
 
 	Boolean areBooksAvailable(List<Long> bookIds);
+
+	List<Book> searchBooks(
+			String title,
+			String author,
+			LocalDate publication_date,
+			String category,
+			String isbn,
+			Integer rating,
+			Boolean visible
+	);
 }
